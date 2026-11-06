@@ -1,22 +1,22 @@
 -- Тестовые данные. Выполнить в Supabase → SQL Editor ПОСЛЕ того, как созданы 3 пользователя
 -- (Authentication → Users → Add user → Create new user, галочка «Auto Confirm User»):
---   boss@crm.test   — постановщик
---   ivan@crm.test   — исполнитель
---   petr@crm.test   — исполнитель
+--   boss@crm.test        — постановщик (Сергей Начальников)
+--   ispolnitel1@crm.test — исполнитель (Иван Петров)
+--   ispolnitel2@crm.test — исполнитель (Пётр Сидоров)
 -- SQL Editor работает от роли postgres, поэтому auth.uid() здесь пустой —
 -- подставляем пользователей явно через request.jwt.claim.sub.
 
 do $$
 declare
   v_boss uuid := (select id from auth.users where email = 'boss@crm.test');
-  v_ivan uuid := (select id from auth.users where email = 'ivan@crm.test');
-  v_petr uuid := (select id from auth.users where email = 'petr@crm.test');
+  v_ivan uuid := (select id from auth.users where email = 'ispolnitel1@crm.test');
+  v_petr uuid := (select id from auth.users where email = 'ispolnitel2@crm.test');
   o1 uuid; o2 uuid; o3 uuid;
   t uuid;
 
 begin
   if v_boss is null or v_ivan is null or v_petr is null then
-    raise exception 'Сначала создайте пользователей boss@crm.test, ivan@crm.test, petr@crm.test';
+    raise exception 'Сначала создайте пользователей boss@crm.test, ispolnitel1@crm.test, ispolnitel2@crm.test';
   end if;
 
   update public.profiles set role = 'manager',  full_name = 'Сергей Начальников' where id = v_boss;
