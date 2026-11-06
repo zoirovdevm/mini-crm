@@ -1,8 +1,8 @@
 -- Тестовые данные. Выполнить в Supabase → SQL Editor ПОСЛЕ того, как созданы 3 пользователя
 -- (Authentication → Users → Add user → Create new user, галочка «Auto Confirm User»):
 --   boss@crm.test        — постановщик (Сергей Начальников)
---   ispolnitel1@crm.test — исполнитель (Иван Петров)
---   ispolnitel2@crm.test — исполнитель (Пётр Сидоров)
+--   ispolnitel1@crm.test — исполнитель (Исполнитель 1)
+--   ispolnitel2@crm.test — исполнитель (Исполнитель 2)
 -- SQL Editor работает от роли postgres, поэтому auth.uid() здесь пустой —
 -- подставляем пользователей явно через request.jwt.claim.sub.
 
@@ -20,8 +20,8 @@ begin
   end if;
 
   update public.profiles set role = 'manager',  full_name = 'Сергей Начальников' where id = v_boss;
-  update public.profiles set role = 'executor', full_name = 'Иван Петров'        where id = v_ivan;
-  update public.profiles set role = 'executor', full_name = 'Пётр Сидоров'       where id = v_petr;
+  update public.profiles set role = 'executor', full_name = 'Исполнитель 1'      where id = v_ivan;
+  update public.profiles set role = 'executor', full_name = 'Исполнитель 2'      where id = v_petr;
 
   perform set_config('request.jwt.claim.sub', v_boss::text, true);
 
